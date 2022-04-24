@@ -57,11 +57,8 @@ User user = (User) session.getAttribute("currentUser");
 			} else {
 			%>
 			<!-- Button trigger modal -->
-			<a class="btn btn-outline-light" data-toggle="modal"
+			<a class="btn btn-success" data-toggle="modal"
 				data-target="#createPostModal"> Create Post</a>
-
-			<!-- 			<button type="button" class="btn btn-outline-light" data-toggle="modal" -->
-			<!-- 				data-target="#createPostModal">Launch demo modal</button> -->
 			<%
 			}
 			%>
@@ -84,49 +81,50 @@ User user = (User) session.getAttribute("currentUser");
 					</button>
 				</div>
 				<div class="modal-body">
-					<div class="form-group">
-						<select class="form-control">
-							<option selected disabled>Select Category</option>
-							<%
-							PostDao postDao = new PostDao(ConnectionProvider.getConnection());
-							ArrayList<Category> catList = postDao.getAllCategories();
-							for (Category c : catList) {
-							%>
-							<option><%=c.getCategoryName()%></option>
-							<%
-							}
-							%>
-						</select>
-					</div>
 
-					<form action="AddPostServlet" method="post">
+					<form id="createPostForm" action="AddPostServlet" method="post"
+						enctype='multipart/form-data'>
+						<div class="form-group">
+							<select class="form-control" name="catId">
+								<option selected disabled>Select Category</option>
+								<%
+								PostDao postDao = new PostDao(ConnectionProvider.getConnection());
+								ArrayList<Category> catList = postDao.getAllCategories();
+								for (Category c : catList) {
+								%>
+								<option value="<%=c.getCategoryId()%>"><%=c.getCategoryName()%></option>
+								<%
+								}
+								%>
+							</select>
+						</div>
+
 						<div class="form-group">
 							<input type="text" placeholder="Enter post title"
-								class="form-control">
+								class="form-control" name="postTitle">
 						</div>
 
 						<div class="form-group">
 							<textarea class="form-control" placeholder="Enter post content"
-								style="height: 200px"></textarea>
+								style="height: 200px" name="postContent"></textarea>
 						</div>
 
 						<div class="form-group">
 							<textarea class="form-control" placeholder="Enter code if any"
-								style="height: 100px"></textarea>
+								style="height: 100px" name="postCode"></textarea>
 						</div>
 
 						<div class="form-group">
 							<label>Select picture for your blog post:</label> <input
-								type="file" placeholder="Enter picture">
+								type="file" placeholder="Enter picture" name="postPic"
+								accept="image/png, image/gif, image/jpeg">
+						</div>
+
+						<div class="container text-center">
+							<button type="submit" class="btn btn-primary primary-background">Post</button>
 						</div>
 
 					</form>
-
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
 				</div>
 			</div>
 		</div>
@@ -247,8 +245,8 @@ User user = (User) session.getAttribute("currentUser");
 	<!-- End of Posts -->
 
 	<!-- Bootstrap Bundle with Popper -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 		crossorigin="anonymous"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
@@ -258,6 +256,8 @@ User user = (User) session.getAttribute("currentUser");
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 	<script src="js/index.js"></script>
 </body>
 </html>

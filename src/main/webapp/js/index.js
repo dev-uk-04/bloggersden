@@ -66,3 +66,35 @@ $(document).ready(function() {
 		});
 	});
 });
+
+
+// Create post form
+
+$(document).ready(function() {
+
+	$('#createPostForm').on('submit', function(event) {
+		event.preventDefault();
+
+		let formData = new FormData(this);
+
+		$.ajax({
+			url: "AddPostServlet",
+			type: "POST",
+			data: formData,
+			success: function(data, textStatus, jqXHR) {
+				if (data.trim() == 'saved') {
+					swal("Good job!", "Your blog has been posted!", "success");
+					$('#createPostModal').modal('hide');
+				} else {
+					swal("Error!", "Something went wrong. Try again!", "error");
+				}
+			},
+
+			error: function(jqXHR, textStatus, errorThrown) {
+				swal("Error!", "Something went wrong. Try again!", "error");
+			},
+			processData: false,
+			contentType: false
+		});
+	});
+});

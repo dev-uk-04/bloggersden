@@ -11,11 +11,13 @@ public class Post {
 	private String postPic;
 	private Timestamp postDate;
 	private int categoryId;
+	private int userId;
 
 	public Post() {
 	}
 
-	public Post(int postId, String postTitle, String postContent, String postCode, String postPic, Timestamp postDate, int categoryId) {
+	public Post(int postId, String postTitle, String postContent, String postCode, String postPic, Timestamp postDate,
+			int categoryId, int userId) {
 		this.postId = postId;
 		this.postTitle = postTitle;
 		this.postContent = postContent;
@@ -23,15 +25,18 @@ public class Post {
 		this.postPic = postPic;
 		this.postDate = postDate;
 		this.categoryId = categoryId;
+		this.userId = userId;
 	}
 
-	public Post(String postTitle, String postContent, String postCode, String postPic, Timestamp postDate, int categoryId) {
+	public Post(String postTitle, String postContent, String postCode, String postPic, Timestamp postDate,
+			int categoryId, int userId) {
 		this.postTitle = postTitle;
 		this.postContent = postContent;
 		this.postCode = postCode;
 		this.postPic = postPic;
 		this.postDate = postDate;
 		this.categoryId = categoryId;
+		this.userId = userId;
 	}
 
 	public int getPostId() {
@@ -81,13 +86,21 @@ public class Post {
 	public void setPostDate(Timestamp postDate) {
 		this.postDate = postDate;
 	}
-	
+
 	public int getCategoryId() {
 		return categoryId;
 	}
 
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 }
