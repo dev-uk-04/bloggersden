@@ -5,6 +5,7 @@
 <%@ page import="com.bloggersden.entities.Post"%>
 <%@ page import="com.bloggersden.entities.Category"%>
 <%@ page import="com.bloggersden.dao.PostDao"%>
+<%@ page import="com.bloggersden.dao.UserDao"%>
 <%@ page errorPage="errorpage.jsp"%>
 
 <%
@@ -50,9 +51,12 @@ Post post = pd.getPostByPostId(postId);
 						<div class="container">
 							<div class="row my-3">
 								<div class="col-md-8">
+								<%
+								UserDao ud = new UserDao(ConnectionProvider.getConnection());
+								%>
 									<p>
-										<img src="pics/<%=user.getUserProfile()%>" class="user-image"><a
-											href="#"> <%=user.getUserName()%></a>
+										<img src="pics/<%=ud.getUserByUserId(post.getUserId()).getUserProfile()%>" class="user-image"><a
+											href="#"> <%=ud.getUserByUserId(post.getUserId()).getUserName()%></a>
 									</p>
 								</div>
 								<div class="col-md-4">

@@ -45,7 +45,7 @@ if (user == null) {
 				<div class="col-md-4">
 					<div class="list-group">
 						<a href="#" onclick="getPosts(0, this)"
-							class="c-link list-group-item list-group-item-action"> All
+							class="c-link list-group-item list-group-item-action"> My
 							Posts </a>
 
 						<%

@@ -1,7 +1,12 @@
+<%@page import="com.bloggersden.entities.User"%>
 <%@page import="com.bloggersden.helper.ConnectionProvider"%>
 <%@page import="com.bloggersden.dao.PostDao"%>
 <%@page import="com.bloggersden.entities.Post"%>
 <%@page import="java.util.List"%>
+
+<%
+User user = (User) session.getAttribute("currentUser");
+%>
 
 <div class="row">
 	<%
@@ -12,9 +17,9 @@
 	int catId = Integer.parseInt(request.getParameter("cid"));
 
 	if (catId == 0) {
-		posts = pDao.getAllPosts();
+		posts = pDao.getAllPostsByUser(user.getUserId());
 	} else {
-		posts = pDao.getPostByCategory(catId);
+		posts = pDao.getPostByCategory(catId, user.getUserId());
 	}
 
 	if (posts.size() == 0) {
@@ -30,7 +35,7 @@
 				alt="Card image cap">
 			<div class="card-body">
 				<b><%=p.getPostTitle()%></b>
-				<p><%=p.getPostContent()%></p>
+				<p class="profile-page-post"><%=p.getPostContent()%></p>
 			</div>
 
 			<div class="card-footer text-center primary-background">

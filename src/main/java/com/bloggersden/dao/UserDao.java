@@ -16,6 +16,8 @@ public class UserDao {
 	private static final String userExistQuery = "SELECT COUNT(*) FROM USER WHERE EMAIL = ?";
 
 	private static final String updateUserQuery = "UPDATE USER SET NAME=?, EMAIL=?, PASSWORD=?, PROFILE=? WHERE ID=?";
+	
+	private static final String userDetailsQuery = "SELECT * FROM USER WHERE ID = ?";
 
 	public UserDao(Connection connection) {
 		this.connection = connection;
@@ -112,6 +114,31 @@ public class UserDao {
 		}
 
 		return updateFlag;
+	}
+	
+	public User getUserByUserId(int userId) {
+		
+		User user = null;
+		
+		try {
+			PreparedStatement prepStatement = this.connection.prepareStatement(userDetailsQuery);
+			prepStatement.setInt(1, userId);
+			ResultSet resultSet = prepStatement.executeQuery();
+			
+			if (resultSet.next()) {
+				user = new User();
+				user.setUserId(resultSet.getInt("id"));
+				user.setUserName(resultSet.getString("name"));
+				user.setUserEmail(resultSet.getString("email"));
+				user.setUserPassword(resultSet.getString("password"));
+				user.setUserGender(resultSet.getString("gender"));
+				user.setUserProfile(resultSet.getString("profile"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();			
+		}
+		
+		return user;
 	}
 
 }

@@ -4,7 +4,9 @@
 <%@page import="com.bloggersden.helper.ConnectionProvider"%>
 <%@page import="com.bloggersden.entities.User"%>
 <%@page import="com.bloggersden.entities.Category"%>
+<%@page import="com.bloggersden.entities.Post"%>
 <%@page import="com.bloggersden.dao.PostDao"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page errorPage="errorpage.jsp"%>
 
@@ -64,120 +66,48 @@ User user = (User) session.getAttribute("currentUser");
 
 		</div>
 	</div>
-	
+
 	<!-- Create post modal -->
-	<%@include file="createpost.jsp" %>
+	<%@include file="createpost.jsp"%>
 
 
 	<!-- Posts -->
+	<%
+	Thread.sleep(500);
+	PostDao pDao = new PostDao(ConnectionProvider.getConnection());
+	List<Post> posts = null;
+	posts = pDao.getAllPosts();
+	%>
+
+
 	<div class="container">
-		<div class="row mb-4 ml-auto">
-			<div class="col-md-4">
-				<div class="card" style="width: 18rem;">
+		<div class="row ml-auto">
+			<%
+			for (Post p : posts) {
+			%>
+			<div class="col-md-4 mt-3">
+				<div class="card" style="width: 20rem;">
+					<img class="card-img-top" src="blogpics/<%=p.getPostPic()%>"
+						height="200px" width="100px">
 					<div class="card-body">
-						<h5 class="card-title">Java Programming</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn primary-background text-white">Read
-							More</a>
+						<b><%=p.getPostTitle()%></b>
+					</div>
+
+					<div class="card-footer text-center primary-background">
+						<a href="showblog.jsp?post_id=<%=p.getPostId()%>"
+							class="btn btn-outline-light btn-sm">Read More</a> <a href="#"
+							class="btn btn-outline-light btn-sm"><i
+							class="fa fa-light fa-thumbs-up"></i><span> 10</span></a> <a href="#"
+							class="btn btn-outline-light btn-sm"><i
+							class="fa fa-comment-dots"></i><span> 20</span></a>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="card" style="width: 18rem;">
-					<div class="card-body">
-						<h5 class="card-title">Java Programming</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn primary-background text-white">Read
-							More</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card" style="width: 18rem;">
-					<div class="card-body">
-						<h5 class="card-title">Java Programming</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn primary-background text-white">Read
-							More</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row mb-4 ml-auto">
-			<div class="col-md-4">
-				<div class="card" style="width: 18rem;">
-					<div class="card-body">
-						<h5 class="card-title">Java Programming</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn primary-background text-white">Read
-							More</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card" style="width: 18rem;">
-					<div class="card-body">
-						<h5 class="card-title">Java Programming</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn primary-background text-white">Read
-							More</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card" style="width: 18rem;">
-					<div class="card-body">
-						<h5 class="card-title">Java Programming</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn primary-background text-white">Read
-							More</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row mb-4  ml-auto">
-			<div class="col-md-4">
-				<div class="card" style="width: 18rem;">
-					<div class="card-body">
-						<h5 class="card-title">Java Programming</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn primary-background text-white">Read
-							More</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card" style="width: 18rem;">
-					<div class="card-body">
-						<h5 class="card-title">Java Programming</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn primary-background text-white">Read
-							More</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card" style="width: 18rem;">
-					<div class="card-body">
-						<h5 class="card-title">Java Programming</h5>
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn primary-background text-white">Read
-							More</a>
-					</div>
-				</div>
-			</div>
+			<%
+			}
+			%>
 		</div>
 	</div>
-
 	<!-- End of Posts -->
 
 	<!-- Bootstrap Bundle with Popper -->
@@ -194,7 +124,8 @@ User user = (User) session.getAttribute("currentUser");
 		crossorigin="anonymous"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-	<script src="https://kit.fontawesome.com/8a89d31ffa.js" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/8a89d31ffa.js"
+		crossorigin="anonymous"></script>
 	<script src="js/index.js"></script>
 </body>
 </html>

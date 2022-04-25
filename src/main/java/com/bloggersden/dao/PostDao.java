@@ -16,7 +16,9 @@ public class PostDao {
 			+ "VALUES (?, ?, ?, ?, ?, ?)";
 	private static final String allPostQuery = "SELECT * FROM POSTS";
 	private static final String postByCategoryQuery = "SELECT * FROM POSTS WHERE CATEGORY_ID = ?";
+	private static final String postByCategoryUserQuery = "SELECT * FROM POSTS WHERE CATEGORY_ID = ? AND USER_ID = ?";
 	private static final String postByPostIdQuery = "SELECT * FROM POSTS WHERE POST_ID = ?";
+	private static final String postByUserIdQuery = "SELECT * FROM POSTS WHERE USER_ID = ?";
 
 	public PostDao(Connection connection) {
 		this.connection = connection;
@@ -99,6 +101,39 @@ public class PostDao {
 
 		return posts;
 	}
+	
+	public List<Post> getAllPostsByUser(int userId) {
+
+		List<Post> posts = new ArrayList<>();
+
+		// Fetch all posts
+		try {
+
+			PreparedStatement prepStatement = connection.prepareStatement(postByUserIdQuery);
+			prepStatement.setInt(1, userId);
+			ResultSet resultSet = prepStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				int postId = resultSet.getInt("post_id");
+				String postTitle = resultSet.getString("post_title");
+				String postContent = resultSet.getString("post_content");
+				String postCode = resultSet.getString("post_code");
+				String postPic = resultSet.getString("post_pic");
+				Timestamp postdate = resultSet.getTimestamp("post_date");
+				int cId = resultSet.getInt("category_id");
+				int uId = resultSet.getInt("user_id");
+
+				Post post = new Post(postId, postTitle, postContent, postCode, postPic, postdate, cId, uId);
+				posts.add(post);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return posts;
+	}
 
 	public List<Post> getPostByCategory(int catId) {
 
@@ -132,6 +167,41 @@ public class PostDao {
 
 		return postByCatId;
 	}
+	
+	public List<Post> getPostByCategory(int catId, int userId) {
+
+		List<Post> postByCatId = new ArrayList<>();
+
+		// Fetch posts by Category ID
+		try {
+
+			PreparedStatement prepStatement = connection.prepareStatement(postByCategoryUserQuery);
+			prepStatement.setInt(1, catId);
+			prepStatement.setInt(2, userId);
+			ResultSet resultSet = prepStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				int postId = resultSet.getInt("post_id");
+				String postTitle = resultSet.getString("post_title");
+				String postContent = resultSet.getString("post_content");
+				String postCode = resultSet.getString("post_code");
+				String postPic = resultSet.getString("post_pic");
+				Timestamp postdate = resultSet.getTimestamp("post_date");
+				int cId = resultSet.getInt("category_id");
+				int uId = resultSet.getInt("user_id");
+
+				Post post = new Post(postId, postTitle, postContent, postCode, postPic, postdate, cId, uId);
+				postByCatId.add(post);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return postByCatId;
+	}
+	
 	
 	public Post getPostByPostId(int postId) {
 		

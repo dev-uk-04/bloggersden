@@ -7,8 +7,8 @@ User loggedUser = (User) session.getAttribute("currentUser");
 
 <nav
 	class="navbar navbar-expand-lg navbar-dark bg-dark primary-background">
-	<a class="navbar-brand" href="index.jsp"><span class="fa-solid fa-blog"></span>
-		&nbsp;Bloggers Den</a>
+	<a class="navbar-brand" href="index.jsp"><span
+		class="fa-solid fa-blog"></span> &nbsp;Bloggers Den</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarSupportedContent"
 		aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -34,8 +34,17 @@ User loggedUser = (User) session.getAttribute("currentUser");
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> Categories </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="#">Programming Language</a> <a
-						class="dropdown-item" href="#">Data Structures & Algorithms</a>
+					<%
+					PostDao psd = new PostDao(ConnectionProvider.getConnection());
+					ArrayList<Category> cl = psd.getAllCategories();
+					for (Category c : cl) {
+					%>
+					<a href="#" onclick="getPosts(<%=c.getCategoryId()%>, this)"
+						class="c-link list-group-item list-group-item-action"> <%=c.getCategoryName()%>
+					</a>
+					<%
+					}
+					%>
 				</div></li>
 			<%
 			if (loggedUser != null) {

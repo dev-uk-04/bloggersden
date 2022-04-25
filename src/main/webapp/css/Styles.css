@@ -16,7 +16,7 @@ body {
 	margin-left: 80px;
 }
 
-p {
+.profile-page-post {
     height:60px;
     line-height:20px; 
     overflow:hidden;
