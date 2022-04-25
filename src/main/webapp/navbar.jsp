@@ -7,15 +7,16 @@ User loggedUser = (User) session.getAttribute("currentUser");
 
 <nav
 	class="navbar navbar-expand-lg navbar-dark bg-dark primary-background">
-	<a class="navbar-brand" href="index.jsp"><span class="fa fa-book"></span>
-		Bloggers Den</a>
+	<a class="navbar-brand" href="index.jsp"><span class="fa-solid fa-blog"></span>
+		&nbsp;Bloggers Den</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarSupportedContent"
 		aria-controls="navbarSupportedContent" aria-expanded="false"
 		aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-	<div class="serach-container">
+
+	<div class="search-container">
 		<form class="form-inline my-2 my-lg-0">
 			<input class="form-control mr-sm-2" type="search"
 				placeholder="Search" aria-label="Search">
@@ -39,9 +40,22 @@ User loggedUser = (User) session.getAttribute("currentUser");
 			<%
 			if (loggedUser != null) {
 			%>
+			<!-- Create Post trigger modal -->
+
 			<li class="nav-item"><a class="nav-link mr-auto" href="#!"
-				data-toggle="modal" data-target="#profile-modal"><i
-					class="fa fa-user-circle"></i> <%=loggedUser.getUserName()%></a></li>
+				data-toggle="modal" data-target="#createPostModal"><i
+					class="	fa fa-plus-circle"></i>&nbsp; Create Post</a></li>
+
+
+			<li class="nav-item dropdown"><a
+				class="nav-link mr-auto dropdown-toggle" href="#!" role="button"
+				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+					class="fa fa-light fa-user"></i> &nbsp;<%=loggedUser.getUserName()%></a>
+				<div class="dropdown-menu" aria-labelledby="profileDropdown">
+					<a class="dropdown-item" href="profile.jsp">Profile</a> <a
+						class="dropdown-item" href="#!" data-toggle="modal"
+						data-target="#profile-modal">Edit Details</a>
+				</div></li>
 
 			<li class="nav-item"><a class="nav-link" href="LogoutServlet"><i
 					class="fa fa-sign-out"></i> Logout</a></li>
@@ -62,7 +76,12 @@ User loggedUser = (User) session.getAttribute("currentUser");
 <%
 if (loggedUser != null) {
 %>
+
+<!-- Create Post Modal -->
+<%@include file="createpost.jsp"%>
+
 <!-- Profile Modal -->
+
 <div class="modal fade" id="profile-modal" tabindex="-1" role="dialog"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">

@@ -1,7 +1,7 @@
-<%@page import="com.bloggersden.helper.ConnectionProvider"%>
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="java.sql.*"%>
+<%@page import="com.bloggersden.helper.ConnectionProvider"%>
 <%@page import="com.bloggersden.entities.User"%>
 <%@page import="com.bloggersden.entities.Category"%>
 <%@page import="com.bloggersden.dao.PostDao"%>
@@ -26,8 +26,7 @@ User user = (User) session.getAttribute("currentUser");
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <link href="css/Styles.css" rel="stylesheet" type="text/css">
 
 <title>Bloggers Den</title>
@@ -56,7 +55,7 @@ User user = (User) session.getAttribute("currentUser");
 			<%
 			} else {
 			%>
-			<!-- Button trigger modal -->
+			<!-- Create Post trigger modal -->
 			<a class="btn btn-success" data-toggle="modal"
 				data-target="#createPostModal"> Create Post</a>
 			<%
@@ -65,75 +64,12 @@ User user = (User) session.getAttribute("currentUser");
 
 		</div>
 	</div>
-
-	<!-- Create Post Modal -->
-
-	<div class="modal fade" id="createPostModal" tabindex="-1"
-		role="dialog" aria-labelledby="createPostModal" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="createPostModalLabel">Add your
-						post</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-
-					<form id="createPostForm" action="AddPostServlet" method="post"
-						enctype='multipart/form-data'>
-						<div class="form-group">
-							<select class="form-control" name="catId">
-								<option selected disabled>Select Category</option>
-								<%
-								PostDao postDao = new PostDao(ConnectionProvider.getConnection());
-								ArrayList<Category> catList = postDao.getAllCategories();
-								for (Category c : catList) {
-								%>
-								<option value="<%=c.getCategoryId()%>"><%=c.getCategoryName()%></option>
-								<%
-								}
-								%>
-							</select>
-						</div>
-
-						<div class="form-group">
-							<input type="text" placeholder="Enter post title"
-								class="form-control" name="postTitle">
-						</div>
-
-						<div class="form-group">
-							<textarea class="form-control" placeholder="Enter post content"
-								style="height: 200px" name="postContent"></textarea>
-						</div>
-
-						<div class="form-group">
-							<textarea class="form-control" placeholder="Enter code if any"
-								style="height: 100px" name="postCode"></textarea>
-						</div>
-
-						<div class="form-group">
-							<label>Select picture for your blog post:</label> <input
-								type="file" placeholder="Enter picture" name="postPic"
-								accept="image/png, image/gif, image/jpeg">
-						</div>
-
-						<div class="container text-center">
-							<button type="submit" class="btn btn-primary primary-background">Post</button>
-						</div>
-
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- End of Create Post Modal -->
+	
+	<!-- Create post modal -->
+	<%@include file="createpost.jsp" %>
 
 
-	<!-- 	Posts  -->
+	<!-- Posts -->
 	<div class="container">
 		<div class="row mb-4 ml-auto">
 			<div class="col-md-4">
@@ -258,6 +194,7 @@ User user = (User) session.getAttribute("currentUser");
 		crossorigin="anonymous"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+	<script src="https://kit.fontawesome.com/8a89d31ffa.js" crossorigin="anonymous"></script>
 	<script src="js/index.js"></script>
 </body>
 </html>

@@ -1,7 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+
 .primary-background {
 	background-color: #1a237e!important;
 }
 
 .banner-background {
 		clip-path: polygon(30% 0%, 70% 0%, 100% 0, 100% 98%, 65% 92%, 31% 97%, 0 92%, 0 0);
+}
+
+body {
+	font-family: 'Poppins', sans-serif;
+}
+
+.search-container {
+	margin-left: 80px;
+}
+
+p {
+    height:60px;
+    line-height:20px; 
+    overflow:hidden;
+}
+
+.post-content {
+	font-weight: 100;
+	font-size: 16px;
+}	
+
+.user-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+
+  object-fit: cover;
+  object-position: center right;
+}
+
+.post-date {
+	font-style: italic;
 }
